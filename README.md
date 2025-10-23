@@ -12,7 +12,7 @@ The 8 Week SQL Challenge by Danny Ma is a structured series of real-world SQL ex
 
 ## 📂 Case Studies Overview
 
-1. **[Danny's Diner](Case_Studies/Case_study_1_Dannys_Diner/README.md)**  
+1. **[Danny's Diner](Case Study #1 - Danny's Diner/dannys_diner.sql)**  
    Analyze restaurant sales data to identify top-selling items and optimize inventory.
    Focus: Customer loyalty and spending behavior analysis using CTE, SQL window functions, joins, and aggregations.
 
@@ -41,3 +41,4 @@ All case studies will be organized in individual folders under `Case_Studies/`. 
 ---
 
 This repository will be updated as I complete each weekly case study, documenting **approaches, SQL queries, and insights** from the challenge.
+
