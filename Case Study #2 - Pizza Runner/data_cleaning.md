@@ -56,23 +56,14 @@ This document outlines the **detailed cleaning steps**, reasoning, methods used 
 <summary><strong>Click to view SQL code</strong></summary>
 
 ```sql
--- Replace blank cells with SQL NULL
+-- Replace blank or textual 'null' cells with SQL NULL in customer_orders
 UPDATE customer_orders
 SET exclusions = NULL
-WHERE exclusions = '';
+WHERE exclusions = '' OR exclusions = 'null';
 
 UPDATE customer_orders
 SET extras = NULL
-WHERE extras = '';
-
--- Replace textual 'null' with SQL NULL
-UPDATE customer_orders
-SET exclusions = NULL
-WHERE exclusions = 'null';
-
-UPDATE customer_orders
-SET extras = NULL
-WHERE extras = 'null';
+WHERE extras = '' OR extras = 'null';
 
 -- Verify table structure
 DESCRIBE customer_orders;
@@ -113,23 +104,18 @@ LIMIT 10;
 <summary><strong>Click to view SQL code</strong></summary>
 
 ```sql
--- Replace blank cells with SQL NULL
+-- Replace blank or textual 'null' cells with SQL NULL in runner_orders
 UPDATE runner_orders
 SET distance = NULL
-WHERE distance = '';
+WHERE distance = '' OR distance = 'null';
 
 UPDATE runner_orders
 SET duration = NULL
-WHERE duration = '';
-
--- Replace text 'null' with SQL NULL
-UPDATE runner_orders
-SET distance = NULL
-WHERE distance = 'null';
+WHERE duration = '' OR duration = 'null';
 
 UPDATE runner_orders
-SET duration = NULL
-WHERE duration = 'null';
+SET cancellation = NULL
+WHERE cancellation = '' OR cancellation = 'null';
 
 -- Alter data types
 ALTER TABLE runner_orders MODIFY distance DECIMAL(5,2);
