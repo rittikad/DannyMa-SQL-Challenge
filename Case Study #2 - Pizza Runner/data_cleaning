@@ -1,0 +1,36 @@
+Data Cleaning Steps – Pizza Runner
+
+
+
+
+
+
+Introduction
+
+Before performing any SQL analysis for the Pizza Runner dataset, it was crucial to clean and standardize the data.
+
+The dataset contained multiple tables:
+
+customer_orders
+
+runner_orders
+
+pizza_recipes
+
+pizza_names
+
+pizza_toppings
+
+runners
+
+Common issues included:
+
+Multiple values in a single cell (violating SQL atomicity)
+
+Blank or inconsistent entries
+
+Textual "null" instead of SQL NULL
+
+Incorrect data types for numeric columns (distance, duration)
+
+This document outlines the detailed cleaning steps, reasoning, methods used (Excel & SQL), and example code for each table.
