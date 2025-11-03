@@ -30,7 +30,7 @@ This document outlines the **detailed cleaning steps**, reasoning, methods used 
 
 ---
 
-## 1. Customer Orders Table (`pizza_runner.customer_orders`)
+### 1. Customer Orders Table (`pizza_runner.customer_orders`)
 
 **Issues Identified:**
 
@@ -94,7 +94,7 @@ LIMIT 10;
 
   ---
 
-## 2. Runner Orders Table (`pizza_runner.runner_orders`)
+### 2. Runner Orders Table (`pizza_runner.runner_orders`)
 
 **Reasoning:**  
 - Columns `distance` and `duration` were stored as `VARCHAR` and included metrics (`km`, `minutes`).  
@@ -145,7 +145,7 @@ ALTER TABLE runner_orders MODIFY duration INT;
 
 ---
 
-## 3. Pizza Recipes Table (`pizza_runner.pizza_recipes`)
+### 3. Pizza Recipes Table (`pizza_runner.pizza_recipes`)
 
 **Reasoning:**  
 - Columns containing toppings had **multiple values in one cell**, violating SQL atomicity.    
@@ -166,7 +166,7 @@ ALTER TABLE runner_orders MODIFY duration INT;
 
 ---
 
-## 4. Pizza Names Table (`pizza_runner.pizza_names`)
+### 4. Pizza Names Table (`pizza_runner.pizza_names`)
 
 **Reasoning:**  
 - Verified that `pizza_id` and `pizza_name` columns have correct data types.  
@@ -184,7 +184,7 @@ ALTER TABLE runner_orders MODIFY duration INT;
 
 ---
 
-## 5. Pizza Toppings Table (`pizza_runner.pizza_toppings`)
+### 5. Pizza Toppings Table (`pizza_runner.pizza_toppings`)
 
 **Reasoning:**  
 - Table already mostly clean; verified column data types.  
@@ -203,7 +203,7 @@ ALTER TABLE runner_orders MODIFY duration INT;
 
 ---
 
-## 6. Runners Table (`pizza_runner.runners`)
+### 6. Runners Table (`pizza_runner.runners`)
 
 **Reasoning:**  
 - Table was clean but checked formats for consistency.  
@@ -221,7 +221,7 @@ ALTER TABLE runner_orders MODIFY duration INT;
 
 ---
 
-## Overall Notes
+#### Overall Notes
 
 - Missing values standardized as SQL `NULL`.  
 - Multi-value columns split into atomic rows for SQL.  
