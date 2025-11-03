@@ -85,4 +85,4 @@ Contains all topping names and their corresponding `topping_id`.
 
 ## Entity Relationship Diagram (ERD)
 
-![ERD](<img width="807" height="390" alt="image" src="https://github.com/user-attachments/assets/f34cbfe3-2eac-4d92-a0b3-4ee653ff0e7d" />)
+![Pizza Runner ERD](https://github.com/user-attachments/assets/f34cbfe3-2eac-4d92-a0b3-4ee653ff0e7d)
