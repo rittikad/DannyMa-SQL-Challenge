@@ -54,12 +54,12 @@ The analysis uses three tables:
 ### 1. Runners Table (`pizza_runner.runners`)
 Contains `runner_id` and `registration_date` for each delivery runner.  
 
-![Sales Dataset](https://github.com/user-attachments/assets/9093a29a-d10b-40b1-8fb8-862cfda9dd90)
+![Runners Dataset](<img width="314" height="249" alt="image" src="https://github.com/user-attachments/assets/cbafa7b5-b1ce-425d-b805-9c933d4ba7bd" />)
 
 ### 2. Customers Orders Table (`pizza_runner.customers_orders`)
 Captures each pizza ordered, including `pizza_id`, `exclusions`, `extras`, and `order_time`. 
 
-![Menu Dataset](https://github.com/user-attachments/assets/5d79d877-7806-489a-abe5-669535d8b52d)
+![Customers Orders Dataset](<img width="793" height="735" alt="image" src="https://github.com/user-attachments/assets/247f891a-0e41-4dfe-8e4c-7e6c139788e5" />)
 
 ### 3. Runner Orders Table (`pizza_runner.runner_orders`)
 Tracks orders assigned to runners, including `pickup_time`, `distance`, `duration`, and `cancellation` status. Some data quality issues exist.  
@@ -85,4 +85,4 @@ Contains all topping names and their corresponding `topping_id`.
 
 ## Entity Relationship Diagram (ERD)
 
-![Pizza Runner ERD](https://github.com/user-attachments/assets/f34cbfe3-2eac-4d92-a0b3-4ee653ff0e7d)
+![Pizza Runner Entity Relationship Diagram](https://github.com/user-attachments/assets/4e78f0e7-2c9c-4d8d-907f-d3afda2047fc)
