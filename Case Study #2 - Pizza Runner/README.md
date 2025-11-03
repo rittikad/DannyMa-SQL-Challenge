@@ -16,9 +16,6 @@
 
 ---
 
-
----
-
 ## Introduction
 
 Pizza Runner, launched by entrepreneur Danny, combines 80s retro styling with pizza delivery. Inspired by a social media post, Danny recruited “runners” to deliver fresh pizzas from his own house and even maxed out his credit card to hire freelance developers to build a mobile app for taking orders.
@@ -88,4 +85,4 @@ Contains all topping names and their corresponding `topping_id`.
 
 ## Entity Relationship Diagram (ERD)
 
-![ERD](https://github.com/user-attachments/assets/10a5a471-b616-44f5-9bb8-e1c1b28bd1d6)
+![ERD](<img width="807" height="390" alt="image" src="https://github.com/user-attachments/assets/f34cbfe3-2eac-4d92-a0b3-4ee653ff0e7d" />)
