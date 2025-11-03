@@ -1,6 +1,6 @@
 # Case Study #1 – Danny's Diner
 
-![Danny's Diner Banner](https://github.com/user-attachments/assets/ce374cce-c9c3-447c-be97-9c42d65b054e)
+<img src="https://github.com/user-attachments/assets/ce374cce-c9c3-447c-be97-9c42d65b054e" alt="Danny's Diner Banner" width="500" height="500" />
 
 ---
 
@@ -421,6 +421,7 @@ Analysis can directly improve customer satisfaction, retention, and revenue.
 
 1. [8 Week SQL Challenge](https://8weeksqlchallenge.com/) - Official website with all case studies.
 2. [Case Study #1 - Danny's Diner](https://8weeksqlchallenge.com/case-study-1/) - Direct link to the case study details.
+
 
 
 
