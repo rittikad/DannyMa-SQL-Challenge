@@ -83,6 +83,7 @@ SELECT *
 FROM customer_orders
 WHERE exclusions IS NULL OR extras IS NULL
 LIMIT 10;
+```
 
 </details>
 
