@@ -83,3 +83,11 @@ SELECT *
 FROM customer_orders
 WHERE exclusions IS NULL OR extras IS NULL
 LIMIT 10;
+
+</details>
+
+### Outcome
+
+- All multi-value cells were split into atomic entries.  
+- Blank cells and textual `"null"` values were converted to proper SQL `NULL`.  
+- Data is standardized and ready for SQL analysis. 
