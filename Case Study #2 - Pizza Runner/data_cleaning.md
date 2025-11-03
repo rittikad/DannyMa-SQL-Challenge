@@ -107,6 +107,11 @@ LIMIT 10;
 - Replaced blank and textual `"null"` values with SQL `NULL`.  
 - Updated column data types: `distance` → `DECIMAL(5,2)`, `duration` → `INT`.
 
+**SQL Cleaning Code:**
+
+<details>
+<summary><strong>Click to view SQL code</strong></summary>
+
 ```sql
 -- Replace blank cells with SQL NULL
 UPDATE runner_orders
