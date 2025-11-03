@@ -13,6 +13,79 @@
 [![ETL Skill](https://img.shields.io/badge/ETL-Skill-yellowgreen)](https://www.talend.com/resources/what-is-etl/)
 [![GitHub Repo](https://img.shields.io/badge/GitHub-Repo-lightgrey)](https://github.com/your-username/your-repo)
 
+
 ---
 
 
+---
+
+## Introduction
+
+Pizza Runner, launched by entrepreneur Danny, combines 80s retro styling with pizza delivery. Inspired by a social media post, Danny recruited “runners” to deliver fresh pizzas from his own house and even maxed out his credit card to hire freelance developers to build a mobile app for taking orders.
+
+Despite its creative concept, Danny initially struggled to manage orders and delivery operations efficiently.
+
+This case study demonstrates how data-driven insights can optimize delivery processes, improve customer satisfaction, and support the growth of a startup in the competitive food delivery market.
+
+---
+
+## Business Problem
+
+**Pizza Runner** lacked actionable insights from its operational and customer data, limiting its ability to streamline deliveries and optimize customer satisfaction. Key challenges included:
+
+- Managing **order and delivery efficiency**, including runner assignment, delivery times, and route optimization.  
+- Understanding **customer behavior**, such as pizza preferences, order frequency, and popular extras or exclusions.  
+- Dealing with **data quality issues**, including missing or inconsistent values in orders, runner assignments, and cancellations.  
+- Utilizing available datasets (`runners`, `customer_orders`, `runner_orders`, `pizza_names`, `pizza_recipes`, `pizza_toppings`) effectively for **decision-making and business growth**.
+  
+---
+
+## Business Questions
+
+1. **Revenue Analysis:** Which menu items generate the highest revenue?  
+2. **Customer Behavior:** How frequently do customers visit, and what is their typical spending pattern?  
+3. **Loyalty Program Impact:** How does spending and purchasing behavior differ between loyalty program members and non-members?  
+4. **Item Popularity:** What is the most purchased menu item overall?
+5. **Inventory Insights:** Which items are most popular for each customer?  
+6. **Loyalty Journey Analysis:** Which item was the first purchased after joining the loyalty program?
+7. **Pre-Membership Behavior:** Which item was purchased last before the customer became a loyalty member?
+
+## Available Dataset
+
+The analysis uses three tables:
+
+### 1. Runners Table (`pizza_runner.runners`)
+Contains `runner_id` and `registration_date` for each delivery runner.  
+
+![Sales Dataset](https://github.com/user-attachments/assets/9093a29a-d10b-40b1-8fb8-862cfda9dd90)
+
+### 2. Customers Orders Table (`pizza_runner.customers_orders`)
+Captures each pizza ordered, including `pizza_id`, `exclusions`, `extras`, and `order_time`. 
+
+![Menu Dataset](https://github.com/user-attachments/assets/5d79d877-7806-489a-abe5-669535d8b52d)
+
+### 3. Runner Orders Table (`pizza_runner.runner_orders`)
+Tracks orders assigned to runners, including `pickup_time`, `distance`, `duration`, and `cancellation` status. Some data quality issues exist.  
+
+![Runner Orders Dataset](https://github.com/user-attachments/assets/your-runner-orders-screenshot)
+
+### 4. Pizza Names Table (`pizza_runner.pizza_names`)
+Lists available pizzas (`Meat Lovers` and `Vegetarian`) with their corresponding `pizza_id`.  
+
+![Pizza Names Dataset](https://github.com/user-attachments/assets/your-pizza-names-screenshot)
+
+### 5. Pizza Recipes Table (`pizza_runner.pizza_recipes`)
+Shows the standard toppings for each pizza type.  
+
+![Pizza Recipes Dataset](https://github.com/user-attachments/assets/your-pizza-recipes-screenshot)
+
+### 6. Pizza Toppings Table (`pizza_runner.pizza_toppings`)
+Contains all topping names and their corresponding `topping_id`.  
+
+![Pizza Toppings Dataset](https://github.com/user-attachments/assets/your-pizza-toppings-screenshot) 
+
+---
+
+## Entity Relationship Diagram (ERD)
+
+![ERD](https://github.com/user-attachments/assets/10a5a471-b616-44f5-9bb8-e1c1b28bd1d6)
