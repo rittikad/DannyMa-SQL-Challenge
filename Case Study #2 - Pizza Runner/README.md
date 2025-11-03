@@ -1,1 +1,1 @@
-[!SQL Challenge Week 2 – Danny Ma Case Study 2]<img width="798" height="809" alt="image" src="https://github.com/user-attachments/assets/138b552c-2c11-4cc0-ab99-463cbaddcf98" />
+[!SQL Challenge Week 2 – Danny Ma Case Study 2](<img width="600" height="600" alt="image" src="https://github.com/user-attachments/assets/138b552c-2c11-4cc0-ab99-463cbaddcf98" />)
