@@ -91,6 +91,7 @@ All full queries and outputs are available in [`balanced_tree.sql`](balanced_tre
 <summary><h3>Business Question 1: Total Quantity Sold & Revenue Analysis</h3></summary>
 
 **SQL Query:**
+```sql
 SELECT 
     pd.product_name,
     SUM(s.qty) AS total_quantity_sold,
@@ -100,6 +101,7 @@ JOIN balanced_tree.product_details pd
 ON s.prod_id = pd.product_id
 GROUP BY pd.product_name
 ORDER BY total_revenue_before_discount DESC;
+```
 
 **Explanation:** This query calculates the total quantity sold and total revenue (before discounts) for each product. It joins the sales table with the product_details table to map product IDs to product names. Summing the quantity gives total units sold, and multiplying price by quantity gives total revenue. Ordering by revenue descending quickly identifies the top-performing products.
 
@@ -253,7 +255,7 @@ ORDER BY times_ordered DESC;
 ---
 
 <details> 
-# Business Question 5: Category-Level Analysis
+<summary><h3> Business Question 5: Category Level Analysis </h3></summary>
 
 ## SQL Query:
 ```sql
