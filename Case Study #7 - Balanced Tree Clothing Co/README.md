@@ -31,7 +31,7 @@ Key challenges the company faces:
 
 ---
 
-## Business Questions (Selected for Real-Life Impact)
+## Business Questions
 
 1. **Total Sales Metrics:** Total quantity sold, revenue before discounts, and total discounts.  
 2. **Transaction Analysis:** Number of unique transactions, average products per transaction, and member vs non-member split.  
@@ -44,28 +44,38 @@ Key challenges the company faces:
 
 ## Available Dataset
 
-The analysis uses three tables:
+The analysis uses two tables:
 
-### 1. Sales Table (`dannys_diner.sales`)
-Captures all purchases at the **customer_id** level, including `order_date` and `product_id`.  
+## Available Datasets
 
-![Sales Dataset](https://github.com/user-attachments/assets/9093a29a-d10b-40b1-8fb8-862cfda9dd90)
+### 1. Product Details (`balanced_tree.product_details`)
+Contains product information, categories, segments, and styles.  
 
-### 2. Menu Table (`dannys_diner.menu`)
-Maps `product_id` to `product_name` and `price`.  
+| product_id | price | product_name                  | category_id | segment_id | style_id | category_name | segment_name | style_name           |
+|------------|-------|-------------------------------|------------|-----------|---------|---------------|-------------|-------------------|
+| c4a632     | 13    | Navy Oversized Jeans - Womens | 1          | 3         | 7       | Womens        | Jeans       | Navy Oversized     |
+| e83aa3     | 32    | Black Straight Jeans - Womens | 1          | 3         | 8       | Womens        | Jeans       | Black Straight     |
+| e31d39     | 10    | Cream Relaxed Jeans - Womens  | 1          | 3         | 9       | Womens        | Jeans       | Cream Relaxed      |
+| d5e9a6     | 23    | Khaki Suit Jacket - Womens    | 1          | 4         | 10      | Womens        | Jacket      | Khaki Suit         |
+| 72f5d4     | 19    | Indigo Rain Jacket - Womens   | 1          | 4         | 11      | Womens        | Jacket      | Indigo Rain        |
+| 9ec847     | 54    | Grey Fashion Jacket - Womens  | 1          | 4         | 12      | Womens        | Jacket      | Grey Fashion       |
+| 5d267b     | 40    | White Tee Shirt - Mens        | 2          | 5         | 13      | Mens          | Shirt       | White Tee          |
+| c8d436     | 10    | Teal Button Up Shirt - Mens   | 2          | 5         | 14      | Mens          | Shirt       | Teal Button Up     |
+| 2a2353     | 57    | Blue Polo Shirt - Mens        | 2          | 5         | 15      | Mens          | Shirt       | Blue Polo          |
+| f084eb     | 36    | Navy Solid Socks - Mens       | 2          | 6         | 16      | Mens          | Socks       | Navy Solid         |
+| b9a74d     | 17    | White Striped Socks - Mens    | 2          | 6         | 17      | Mens          | Socks       | White Striped      |
+| 2feb6b     | 29    | Pink Fluro Polkadot Socks - Mens | 2      | 6         | 18      | Mens          | Socks       | Pink Fluro Polkadot|
 
-![Menu Dataset](https://github.com/user-attachments/assets/5d79d877-7806-489a-abe5-669535d8b52d)
 
-### 3. Members Table (`dannys_diner.members`)
-Records `join_date` when a customer enrolled in the loyalty program.  
+### 2. Product Sales (`balanced_tree.sales`)
+Contains transaction-level data: quantity, price, discount, member status, txn_id, timestamp.  
 
-![Members Dataset](https://github.com/user-attachments/assets/8dfff157-05e1-44b5-a126-c824a557ef5a)
+| prod_id | qty | price | discount | member | txn_id | start_txn_time         |
+|---------|-----|-------|---------|--------|--------|-----------------------|
+| c4a632  | 4   | 13    | 17      | t      | 54f307 | 2021-02-13 01:59:43   |
+| 5d267b  | 4   | 40    | 17      | t      | 54f307 | 2021-02-13 01:59:43   |
 
----
-
-## Entity Relationship Diagram (ERD)
-
-![ERD](https://github.com/user-attachments/assets/10a5a471-b616-44f5-9bb8-e1c1b28bd1d6)
+> **Note:** Additional datasets (`product_hierarchy` and `product_prices`) are used only for the bonus challenge (recreate `product_details`).
 
 ---
 
@@ -73,48 +83,59 @@ Records `join_date` when a customer enrolled in the loyalty program.
 
 For each business question, **SQL queries** were used to extract actionable insights. Below are **sql queries, explanations, outputs and actionable insights**.  
 
-All full queries and outputs are available in [`dannys_diner.sql`](dannys_diner.sql).
+All full queries and outputs are available in [`balanced_tree.sql`](balanced_tree.sql).
 
 ---
 
 <details>
-<summary><h3>Business Question 1: Which menu items generate the highest revenue? </h3></summary>
+<summary><h3>Business Question 1: Total Quantity Sold & Revenue Analysis</h3></summary>
 
 **SQL Query:**
-
-```sql
 SELECT 
-    m.product_name,
-    SUM(s.price) AS total_revenue
-FROM sales s
-JOIN menu m ON s.product_id = m.product_id
-GROUP BY m.product_name
-ORDER BY total_revenue DESC;
-```
+    pd.product_name,
+    SUM(s.qty) AS total_quantity_sold,
+    SUM(s.price * s.qty) AS total_revenue_before_discount
+FROM balanced_tree.sales s
+JOIN balanced_tree.product_details pd
+ON s.prod_id = pd.product_id
+GROUP BY pd.product_name
+ORDER BY total_revenue_before_discount DESC;
 
-**Explanation:** This query joins the sales and menu tables to calculate the total revenue generated by each menu item. By summing the prices of all sales per product and grouping them by product name, it identifies which dishes earn the most money. Ordering the results from highest to lowest revenue allows us to quickly see the most profitable items.
+**Explanation:** This query calculates the total quantity sold and total revenue (before discounts) for each product. It joins the sales table with the product_details table to map product IDs to product names. Summing the quantity gives total units sold, and multiplying price by quantity gives total revenue. Ordering by revenue descending quickly identifies the top-performing products.
 
 **Output:**
-| product_name | total_revenue |
-| ------------ | ------------- |
-| ramen        | 96            |
-| curry        | 60            |
-| sushi        | 30            |
+| product_name                  | total_quantity_sold | total_revenue_before_discount |
+|-------------------------------|------------------|-------------------------------|
+| Blue Polo Shirt - Mens        | 7,638            | 435,366                       |
+| Grey Fashion Jacket - Womens  | 7,752            | 418,608                       |
+| White Tee Shirt - Mens        | 7,600            | 304,000                       |
+| Navy Solid Socks - Mens       | 7,584            | 273,024                       |
+| Black Straight Jeans - Womens | 7,572            | 242,304                       |
+| Pink Fluro Polkadot Socks - Mens | 7,540         | 218,660                       |
+| Khaki Suit Jacket - Womens    | 7,504            | 172,592                       |
+| Indigo Rain Jacket - Womens   | 7,514            | 142,766                       |
+| White Striped Socks - Mens    | 7,310            | 124,270                       |
+| Navy Oversized Jeans - Womens | 7,712            | 100,256                       |
+| Cream Relaxed Jeans - Womens  | 7,414            | 74,140                        |
+| Teal Button Up Shirt - Mens   | 7,292            | 72,920                        |
 
 **Data Insight:**  
-Ramen generated the highest total revenue of **$96**, followed by Curry (**$60**) and Sushi (**$30**). Combined, ramen and curry account for **~80% of total sales**, showing clear customer preference.
+- Blue Polo Shirt - Mens generated the highest revenue (**435,366**), followed by Grey Fashion Jacket - Womens (**418,608**) and White Tee Shirt - Mens (**304,000**).  
+- The top three products contribute **~45% of total revenue**, highlighting revenue concentration among a few key products.  
+- Lower-revenue items like Teal Button Up Shirt and Cream Relaxed Jeans have less individual impact but still contribute to overall sales.
 
 **Actionable Insights:**  
-- **Ramen** generates the highest revenue – it is both popular and profitable.  
-- **Curry** has moderate revenue – steady performer but could benefit from targeted promotion.  
-- **Sushi** generates the least revenue – may need marketing support or menu repositioning.
+- Top-performing items like Blue Polo Shirt and Grey Fashion Jacket are main revenue drivers.  
+- Mid-performing products such as White Tee Shirt and Navy Solid Socks show consistent demand.  
+- Low-performing products like Teal Button Up Shirt and Cream Relaxed Jeans could benefit from marketing or bundling.
 
 **Recommended Actions:**  
-1. **Promote top sellers:** Feature Ramen in combo deals or specials to maximize revenue.  
-2. **Boost mid-performers:** Introduce limited-time offers for Curry to increase its sales.  
-3. **Evaluate low performers:** Consider menu adjustments, cross-selling, or bundling for Sushi to increase customer interest.
+1. Promote top sellers: Feature Blue Polo Shirt and Grey Fashion Jacket in campaigns, bundle offers, and seasonal promotions.  
+2. Boost mid-performers: Introduce targeted promotions, loyalty points, or limited-time deals for White Tee Shirt and Navy Solid Socks.  
+3. Optimize low performers: Consider cross-selling, discounts, or repositioning Teal Button Up Shirt and Cream Relaxed Jeans to increase sales.
 
 </details>
+
 
 ---
 
@@ -232,165 +253,115 @@ ORDER BY times_ordered DESC;
 ---
 
 <details> 
-<summary><h3> Business Question 5: What is the most popular item per customer?  </h3></summary>
+# Business Question 5: Category-Level Analysis
 
-**SQL Query:**
+## SQL Query:
 ```sql
-WITH customer_item_count AS (
+-- Total quantity, revenue, discount per category, and top-selling product per category
+WITH category_agg AS (
     SELECT 
-        s.customer_id,
-        m.product_name,
-        COUNT(*) AS times_purchased
-    FROM sales s
-    JOIN menu m ON s.product_id = m.product_id
-    GROUP BY s.customer_id, m.product_name
+        pd.category_name,
+        SUM(s.qty) AS total_quantity,
+        SUM(s.qty * s.price) AS total_revenue,
+        SUM(s.qty * s.discount/100 * s.price) AS total_discount
+    FROM balanced_tree.sales s
+    JOIN balanced_tree.product_details pd
+    ON s.prod_id = pd.product_id
+    GROUP BY pd.category_name
 ),
-ranked_items AS (
+top_product_per_category AS (
     SELECT 
-        customer_id,
+        category_name,
         product_name,
-        times_purchased,
-        RANK() OVER (PARTITION BY customer_id ORDER BY times_purchased DESC) AS rnk
-    FROM customer_item_count
+        SUM(s.qty * s.price) AS revenue,
+        ROW_NUMBER() OVER (PARTITION BY category_name ORDER BY SUM(s.qty * s.price) DESC) AS rn
+    FROM balanced_tree.sales s
+    JOIN balanced_tree.product_details pd
+    ON s.prod_id = pd.product_id
+    GROUP BY category_name, product_name
 )
 SELECT 
-    customer_id,
-    product_name AS most_popular_item,
-    times_purchased
-FROM ranked_items
-WHERE rnk = 1
-ORDER BY customer_id;
+    c.category_name,
+    c.total_quantity,
+    c.total_revenue,
+    c.total_discount,
+    t.product_name AS top_selling_product,
+    t.revenue AS top_product_revenue
+FROM category_agg c
+JOIN top_product_per_category t
+ON c.category_name = t.category_name
+WHERE t.rn = 1;
 
 ```
-**Explanation:** This query identifies the most frequently purchased menu item(s) for each customer. By joining sales and menu, grouping by customer and product, and ranking purchase counts, we isolate each customer’s top item(s). This helps understand individual customer preferences — crucial for personalization and retention strategies.
+
+**Explanation:** This query calculates category-level performance by aggregating total quantity sold, total revenue, and total discount for each category. It also identifies the top-selling product per category using revenue ranking. This helps understand which categories and products are driving the most sales and profitability.
 
 **Output:**
-| customer_id | most_popular_item   | times_purchased |
-| ----------  | ------------------- | --------------- |
-| A           | ramen               | 3               |
-| B           | curry, sushi, ramen | 2               |
-| C           | ramen               | 3               |
+| category_name | total_quantity | total_revenue | total_discount | top_selling_product          | top_product_revenue |
+| ------------- | -------------- | ------------- | -------------- | ---------------------------- | ------------------ |
+| Mens          | 44,964         | 1,428,240     | 173,215.42     | Blue Polo Shirt - Mens       | 435,366            |
+| Womens        | 45,468         | 1,150,666     | 139,242.86     | Grey Fashion Jacket - Womens | 418,608            |
 
 **Actionable Insights:**
-- **Ramen stands out** as the most popular item across customers, highlighting it as the restaurant’s top-performing product.
-- **Customer B shows diverse preferences**, making them ideal for testing new menu items or combo offers.
-- **Customers A and C are loyal ramen buyers**, presenting an opportunity to deepen engagement through targeted ramen-based offers.
+- **Mens category leads slightly in revenue**, driven by Blue Polo Shirt - Mens.  
+- **Womens category performs strongly**, with Grey Fashion Jacket - Womens as the top revenue contributor.  
+- Top products in each category contribute **~30% of category revenue**, indicating strong dependence on key items.  
+- Discounts impact revenue proportionally across categories, requiring careful monitoring.
 
 **Recommended Actions:**
-1. **Promote ramen as the restaurant’s signature dish** through marketing campaigns or limited-time bundles.
-2. **Personalize offers** for ramen lovers (A & C) — for example, loyalty points multipliers or free toppings.
-3. **Encourage variety-seeking customers like B** with tailored “Chef’s Choice” or “New Arrivals” promotions.
-
-</details>
-
----
-
-<details> 
-<summary><h3> Business Question 6: What is the first item purchased after becoming a member?  </h3></summary>
-
-**SQL Query:**
-```sql
-WITH FirstPurAfterMember AS
-(
-	SELECT 
-		s.customer_id, 
-		product_name, 
-        order_date,
-        join_date,
-		DENSE_RANK() OVER
-        (
-			PARTITION BY s.customer_id 
-            ORDER BY join_date, order_date
-		) AS purchase_ranking
-	FROM sales s
-	JOIN members m
-	ON s.customer_id = m.customer_id
-	JOIN menu mu
-	ON s.product_id = mu.product_id
-	WHERE order_date >= join_date
-)
-SELECT 
-	customer_id,
-    product_name,
-    order_date,
-    join_date
-FROM FirstPurAfterMember
-WHERE purchase_ranking = 1;
-
-```
-**Explanation:** This query identifies the first item each customer purchased after joining the loyalty program. By comparing the customer’s join date with their order date, we uncover how customers behave right after enrollment — providing insights into post-membership engagement and loyalty-driven actions.
-
-**Output:**
-| customer_id | product_name | order_date | join_date |
-| ------------| -------------| -----------| --------- |
-| A           | curry        | 2021-01-07 | 2021-01-07|
-| B           | sushi        | 2021-01-11 | 2021-01-09|
-
-**Actionable Insights:**
-- **Customers make their first purchase almost immediately after joining**, showing strong early engagement.
-- **Preferred items remain consistent** (curry and sushi), indicating trust in familiar choices rather than exploring new ones.
-- **Prompt post-membership spending** signals an opportunity to strengthen long-term loyalty through timely engagement.
-
-**Recommended Actions:**
-1. **Send personalized welcome offers** immediately after a customer joins — e.g., “Thanks for joining! Earn double points on your next visit.”
-2. **Leverage behavioral data** to tailor recommendations around their favorite items (like curry or sushi).
-3. **Design onboarding campaigns** to maintain excitement during the first week after membership.
+1. **Promote top sellers:** Highlight Blue Polo Shirt and Grey Fashion Jacket in campaigns, promotions, and in-store displays.  
+2. **Boost mid-performers:** Cross-sell or bundle other category products to increase overall revenue.  
+3. **Optimize discount strategies:** Ensure discounts drive sales without eroding profit margins excessively.
    
 </details>
 
 ---
 
-<details> 
-<summary><h3> Business Question 7: Most Recent Pre-Membership Purchase </h3></summary>
+<details>
+<summary><h3>Business Question 6: Product Transaction Penetration</h3</summary>
 
 **SQL Query:**
 ```sql
-WITH FirstPurAfterMember AS
-(
-	SELECT 
-		s.customer_id, 
-		product_name, 
-        order_date,
-        join_date,
-		DENSE_RANK() OVER
-        (
-			PARTITION BY s.customer_id 
-            ORDER BY join_date, order_date
-		) AS purchase_ranking
-	FROM sales s
-	JOIN members m
-	ON s.customer_id = m.customer_id
-	JOIN menu mu
-	ON s.product_id = mu.product_id
-	WHERE order_date >= join_date
-)
+-- Calculate transaction penetration for each product
 SELECT 
-	customer_id,
-    product_name,
-    order_date,
-    join_date
-FROM FirstPurAfterMember
-WHERE purchase_ranking = 1;
-```
+    pd.product_name,
+    COUNT(DISTINCT s.txn_id) AS transaction_count,
+   CONCAT(ROUND((COUNT(DISTINCT s.txn_id) * 100.0 / total_txns.total_transactions),2), '%') AS penetration_percentage
+FROM balanced_tree.sales s
+JOIN balanced_tree.product_details pd
+ON s.prod_id = pd.product_id
+GROUP BY pd.product_name
+ORDER BY penetration_percentage DESC;
 
-**Explanation:** This query identifies the last item(s) each customer purchased before joining the loyalty program. It uses a Common Table Expression (CTE) and the RANK() window function to determine the most recent purchase(s) made prior to the customer’s join date.
+```
+**Explanation:**  
+This query calculates the transaction penetration for each product, i.e., the percentage of total transactions in which each product was purchased. It helps identify which products are consistently included in customer purchases and highlights the most popular items across all transactions.
 
 **Output:**
-| customer_id | product_name | order_date | join_date  |
-| ------------| ------------ | ---------- | ---------- |
-| A           | sushi        | 2021-01-01 | 2021-01-07 |
-| A           | curry        | 2021-01-01 | 2021-01-07 |
-| B           | sushi        | 2021-01-04 | 2021-01-09 |
+| product_name                  | transaction_count | penetration_percentage |
+|-------------------------------|-----------------|----------------------|
+| Navy Solid Socks - Mens       | 1,281           | 51.24%               |
+| Grey Fashion Jacket - Womens  | 1,275           | 51.00%               |
+| Navy Oversized Jeans - Womens | 1,274           | 50.96%               |
+| Blue Polo Shirt - Mens        | 1,268           | 50.72%               |
+| White Tee Shirt - Mens        | 1,268           | 50.72%               |
+| Pink Fluro Polkadot Socks - Mens | 1,258        | 50.32%               |
+| Indigo Rain Jacket - Womens   | 1,250           | 50.00%               |
+| Khaki Suit Jacket - Womens    | 1,247           | 49.88%               |
+| Black Straight Jeans - Womens | 1,246           | 49.84%               |
+| Cream Relaxed Jeans - Womens  | 1,243           | 49.72%               |
+| White Striped Socks - Mens    | 1,243           | 49.72%               |
+| Teal Button Up Shirt - Mens   | 1,242           | 49.68%               |
 
 **Actionable Insights:**
-- **Customers often make purchases right before joining**, showing strong brand engagement even before loyalty enrollment.
-- **Customer A** purchased both Sushi and Curry before joining, suggesting interest in product variety.
-- **Understanding pre-join behavior** helps predict which customers are likely to convert to loyalty members
+- **Navy Solid Socks - Mens** and **Grey Fashion Jacket - Womens** are the most consistently purchased, showing they are staples in customer transactions.  
+- Products with slightly lower penetration still appear in roughly half of all transactions, indicating balanced product assortment.  
+- Consistent penetration across many items highlights opportunities for cross-selling and product bundling.
 
 **Recommended Actions:**
-1. **Monitor frequent buyers** to target them with timely loyalty program invitations.
-2. **Offer “Join Now, Earn Points on This Purchase”** promotions to capture pre-conversion customers.
-3. **Bundle popular pre-join items** into exclusive membership offers to strengthen onboarding engagement.
+1. **Maintain stock levels** for high-penetration products to meet consistent demand.  
+2. **Bundle mid-penetration products** with top performers to increase exposure and sales.  
+3. **Analyze common product combinations** to optimize promotions, store layout, and targeted marketing.
    
 </details>
 
