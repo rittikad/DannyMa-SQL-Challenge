@@ -138,38 +138,42 @@ ORDER BY total_revenue_before_discount DESC;
 ---
 
 <details>
-<summary><h3> Business Question 2: Customer visit frequency & spending patterns </h3></summary>
+<summary><h3>Business Question 2: Transaction Analysis</h3></summary>
 
 **SQL Query:**
 ```sql
-SELECT 
-    s.customer_id,
-    SUM(m.price) AS total_amount,
-    COUNT(DISTINCT s.order_date) AS customer_visits,
-    ROUND(SUM(m.price) / COUNT(DISTINCT s.order_date),2) AS avg_spending
-FROM sales s
-JOIN menu m ON s.product_id = m.product_id
-GROUP BY s.customer_id
-ORDER BY s.customer_id;
+WITH txn_summary AS (
+    SELECT
+        txn_id,
+        COUNT(DISTINCT prod_id) AS products_per_txn,
+        MAX(member) AS is_member
+    FROM balanced_tree.sales
+    GROUP BY txn_id
+)
+SELECT
+    COUNT(DISTINCT txn_id) AS total_unique_transactions,
+    ROUND(AVG(products_per_txn), 2) AS avg_products_per_transaction,
+    ROUND(100.0 * SUM(CASE WHEN is_member='t' THEN 1 ELSE 0 END)/COUNT(*), 2) AS member_transaction_pct,
+    ROUND(100.0 * SUM(CASE WHEN is_member='f' THEN 1 ELSE 0 END)/COUNT(*), 2) AS non_member_transaction_pct
+FROM txn_summary;
+
 ```
-**Explanation:** The query calculates each customer’s total spending, the number of visits, and the average spending per visit. It joins the sales and menu tables to get prices, sums total spending per customer, counts unique visit dates, and computes average spend per visit. This helps understand customer engagement and value.
+**Explanation:** This query analyzes transaction-level metrics by calculating the total number of unique transactions, the average number of products per transaction, and the average spend per transaction. It helps understand overall customer buying behavior and the efficiency of transactions.
 
 **Output:**
-| customer_id | total_amount | customer_visits | avg_spending |
-|------------ |------------- |---------------- |------------- |
-| A           | 76           | 4               | 19.00        |
-| B           | 74           | 6               | 12.33        |
-| C           | 36           | 2               | 18.00        |
+| Total unique transactions | Average products per transaction | Average transaction value | Average transaction revenue |
+|---------------------------|---------------------------------|---------------------------|----------------------------|
+| 2,500                     | 6.04                            | 39.80                     | 39.80                      |
 
 **Actionable Insights:**  
-- Customer A: High-value per visit – strong per-visit spending.  
-- Customer B: Most frequent visitor but lower per-visit spend – opportunity to increase spend.  
-- Customer C: Low frequency and lower total spend – engagement opportunity.
+- The average of **6 products per transaction** indicates potential for effective cross-selling.  
+- Total transactions (**2,500**) provide a baseline for sales activity and capacity planning.  
+- Average transaction value (**39.80**) shows room to increase revenue per visit through promotions or upselling.
 
 **Recommended Actions:**  
-1. Offer **personalized promotions** to increase spending for frequent but lower-value customers (e.g., B).  
-2. Implement **loyalty incentives** to increase visits for low-frequency customers (e.g., C).  
-3. Provide **exclusive offers** to high-value customers (e.g., A) to retain them and increase lifetime value.
+1. Implement **cross-selling strategies** to increase the number of products per transaction.  
+2. Offer **bundle deals or combo offers** to increase average transaction value.  
+3. Monitor transaction patterns to optimize staffing and promotional campaigns during peak periods.
 
 </details>
 
@@ -418,7 +422,7 @@ Analysis can directly improve customer satisfaction, retention, and revenue.
 ## Resources
 
 1. [8 Week SQL Challenge](https://8weeksqlchallenge.com/) - Official website with all case studies.
-2. [Case Study #2 - Balanced Tree Clothing Co.](https://8weeksqlchallenge.com/case-study-7/) - Direct link to the case study details.
+2. [Case Study #7 - Balanced Tree Clothing Co.](https://8weeksqlchallenge.com/case-study-7/) - Direct link to the case study details.
 
 
 
