@@ -318,6 +318,7 @@ WHERE t.rn = 1;
 ---
 
 <details>
+    
 <summary><h3>Business Question 6: Product Transaction Penetration</h3</summary>
 
 **SQL Query:**
