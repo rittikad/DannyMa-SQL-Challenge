@@ -1,14 +1,14 @@
 # Case Study #7 – Balanced Tree Clothing Co.
 
-<img src="https://github.com/user-attachments/assets/balanced-tree-banner.png" alt="Balanced Tree Clothing Co. Banner" width="500" height="500" />
+<img src="https://github.com/user-attachments/assets/126a769a-52f9-4c39-88fc-deb80a1f6bb3" alt="Balanced Tree Clothing Co. Banner" width="500" height="500" />
 
 ---
 
-[![SQL Skill](https://img.shields.io/badge/SQL-Skill-blue)](https://www.sqlcourse.com/)  
-[![Data Analysis Skill](https://img.shields.io/badge/Data%20Analysis-Skill-green)](https://www.coursera.org/learn/data-analysis)  
-[![Retail Insights](https://img.shields.io/badge/Retail-Insights-orange)](https://hbr.org/2015/05/the-science-of-customer-insights)  
-[![Business Insights](https://img.shields.io/badge/Business-Insights-red)](https://www.forbes.com/sites/insights)  
-[![Data-Driven](https://img.shields.io/badge/Data-Driven-purple)](https://www.datadrivenbusiness.com/)  
+[![SQL Skill](https://img.shields.io/badge/SQL-Skill-blue)](https://www.sqlcourse.com/) 
+[![Data Analysis Skill](https://img.shields.io/badge/Data%20Analysis-Skill-green)](https://www.coursera.org/learn/data-analysis) 
+[![Customer Insights](https://img.shields.io/badge/Customer-Insights-orange)](https://hbr.org/2015/05/the-science-of-customer-insights) 
+[![Business Insights](https://img.shields.io/badge/Business-Insights-red)](https://www.forbes.com/sites/insights) 
+[![Data-Driven](https://img.shields.io/badge/Data-Driven-purple)](https://www.datadrivenbusiness.com/) 
 [![GitHub Repo](https://img.shields.io/badge/GitHub-Repo-lightgrey)](https://github.com/your-username/your-repo)
 
 ---
