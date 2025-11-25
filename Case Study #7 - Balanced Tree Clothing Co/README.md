@@ -176,7 +176,6 @@ ORDER BY s.customer_id;
 ---
 
 <details>
-    
 <summary><h3>Business Question 3: Top 3 Products by Revenue Before Discounts</h3></summary>
 
 **SQL Query:**
@@ -346,7 +345,6 @@ WHERE t.rn = 1;
 ---
 
 <details>
-    
 <summary><h3>Business Question 6: Product Transaction Penetration</h3></summary>
 
 **SQL Query:**
