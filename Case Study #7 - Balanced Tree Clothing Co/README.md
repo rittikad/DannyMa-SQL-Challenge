@@ -399,23 +399,27 @@ This query calculates the transaction penetration for each product, i.e., the pe
 ---
 
 ## Skills Demonstrated
-| SQL Concept      | Description                               |
-| ---------------- | ----------------------------------------- |
-| JOIN             | Combined sales, menu, and member tables   |
-| GROUP BY         | Aggregated revenue and frequency per item |
-| ORDER BY         | Ranked items by revenue or popularity     |
-| Window Functions | Calculated running totals and item ranks  |
-| CASE Statements  | Conditional logic for member flags        |
 
----
+| SQL Concept / Technique       | Description |
+|-------------------------------|-------------|
+| JOIN                          | Combined `sales`, `product_details`, and `members` tables to get product info, transactions, and member status. |
+| GROUP BY                       | Aggregated metrics like total quantity, total revenue, and total discount per product, category, or segment. |
+| SUM / COUNT                    | Calculated total revenue, quantities sold, transaction counts, and discounts. |
+| ORDER BY                       | Ranked products, categories, and segments by revenue or quantity. |
+| RANK / ROW_NUMBER              | Identified top-selling products within segments or categories. |
+| Window Functions               | Calculated percentage contribution to total revenue or transaction penetration per product. |
+| CASE Statements                | Flagged member vs non-member purchases or categorized data based on conditions. |
+| Percentage Calculations        | Computed contribution of top products, categories, and segments to overall sales. |
+| Basic Arithmetic in SQL        | Derived metrics like average products per transaction, average spending per customer. |
 
-## Optional Insights / Lessons Learned:
+## Optional Insights / Lessons Learned
 
-Data cleanliness and consistent ID formats are essential.
-
-Structuring queries around business questions ensures insights are actionable.
-
-Analysis can directly improve customer satisfaction, retention, and revenue.
+- Top-selling products like **Blue Polo Shirt - Mens** and **Grey Fashion Jacket - Womens** contribute disproportionately to revenue — highlighting the importance of prioritizing inventory and promotions.  
+- Segment and category analysis reveal **concentration of revenue** among a few items, which can guide bundling and upselling strategies.  
+- Loyalty program members tend to generate **higher revenue and frequency** per transaction than non-members, reinforcing the value of member engagement strategies.  
+- Calculating **transaction penetration per product** provides insights into customer reach and product popularity beyond raw revenue.  
+- Structuring SQL queries around **business questions** ensures that outputs are actionable and directly inform decision-making.  
+- Ensuring **data cleanliness and consistent identifiers** across tables is critical for accurate aggregation and analysis.  
 
 ---
 
