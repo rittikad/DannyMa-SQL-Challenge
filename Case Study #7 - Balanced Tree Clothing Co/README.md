@@ -42,10 +42,6 @@ Key challenges the company faces:
 
 ---
 
-## Available Dataset
-
-The analysis uses two tables:
-
 ## Available Datasets
 
 ### 1. Product Details (`balanced_tree.product_details`)
