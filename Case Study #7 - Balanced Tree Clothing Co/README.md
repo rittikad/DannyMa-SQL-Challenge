@@ -176,39 +176,42 @@ ORDER BY s.customer_id;
 ---
 
 <details>
-<summary><h3>Business Question 3: Purchasing behavior differences: Members vs Non-Members?</h3></summary>
+    
+<summary><h3>Business Question 3: Top 3 Products by Revenue Before Discounts</h3></summary>
 
 **SQL Query:**
-
 ```sql
+-- Top 3 products by revenue before discounts
 SELECT 
-    CASE WHEN m.customer_id IS NOT NULL THEN 'Y' ELSE 'N' END AS member,
-    SUM(menu.price) AS total_spent,
-    COUNT(DISTINCT s.customer_id) AS num_customers
-FROM sales s
-LEFT JOIN members m ON s.customer_id = m.customer_id
-JOIN menu ON s.product_id = menu.product_id
-GROUP BY member;
+    pd.product_name,
+    SUM(s.price * s.qty) AS total_revenue_before_discount
+FROM balanced_tree.sales s
+JOIN balanced_tree.product_details pd
+ON s.prod_id = pd.product_id
+GROUP BY pd.product_name
+ORDER BY total_revenue_before_discount DESC
+LIMIT 3;
 ```
 
-**Explanation:** This query evaluates how spending differs between loyalty program members and non-members. It joins the sales and menu tables and uses the members table to flag purchases as by a member (`Y`) or non-member (`N`). It sums total spending and counts the number of customers per group to measure the value of the loyalty program.
+**Explanation:** This query calculates total revenue per product before discounts by joining the `sales` table with `product_details`. By summing the product of quantity and price for each product, we identify which items generate the highest revenue, helping prioritize inventory, promotions, and merchandising.
 
 **Output:**
 
-| member | total_spent | num_customers    |
-|--------|------------ |------------------|
-| N      | 36          | 1                |
-| Y      | 150         | 2                |
+| product_name                  | total_revenue_before_discount |
+|-------------------------------|-------------------------------|
+| Blue Polo Shirt - Mens        | 435,366                       |
+| Grey Fashion Jacket - Womens  | 418,608                       |
+| White Tee Shirt - Mens        | 304,000                       |
 
 **Actionable Insights:**  
-- **Members spend significantly more** than non-members, showing the loyalty program drives higher revenue.  
-- **Fewer non-members** but lower spending indicates untapped revenue potential.  
-- Encouraging non-members to join the program can boost overall sales and engagement.
+- **Blue Polo Shirt - Mens** is the top revenue-generating product, followed closely by **Grey Fashion Jacket - Womens** and **White Tee Shirt - Mens**.  
+- Revenue is concentrated among a few products, showing which items drive the majority of sales.  
+- Lower-selling products are not represented here, indicating areas that could benefit from promotions or repositioning.
 
 **Recommended Actions:**  
-1. **Promote loyalty program enrollment** to non-members with attractive incentives (e.g., discounts, free items).  
-2. **Reward high-spending members** with exclusive offers to retain them and increase lifetime value.  
-3. **Analyze member behavior** to identify opportunities for targeted promotions and upselling.
+1. **Promote top sellers** through marketing campaigns, bundle deals, or seasonal offers.  
+2. **Ensure inventory levels** are sufficient for these high-demand products to avoid stockouts.  
+3. **Boost lower-performing products** with targeted promotions, cross-selling, or discounts to increase overall revenue.
 
 </details>
 
