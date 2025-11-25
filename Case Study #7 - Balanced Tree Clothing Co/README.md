@@ -402,7 +402,7 @@ This query calculates the transaction penetration for each product, i.e., the pe
 
 To streamline analysis for the Balanced Tree team, a single SQL script consolidates all business questions into a monthly report. This allows the team to generate metrics for any month with minimal changes.  
 
-[View SQL Script](/Monthly_reporting_code.sql/)
+[View SQL Script](https://github.com/rittikad/DannyMa-SQL-Challenge/blob/main/Case%20Study%20%237%20-%20Balanced%20Tree%20Clothing%20Co/Monthly_reporting_code.sql)
 
 ---
 
@@ -435,8 +435,3 @@ To streamline analysis for the Balanced Tree team, a single SQL script consolida
 
 1. [8 Week SQL Challenge](https://8weeksqlchallenge.com/) - Official website with all case studies.
 2. [Case Study #7 - Balanced Tree Clothing Co.](https://8weeksqlchallenge.com/case-study-7/) - Direct link to the case study details.
-
-
-
-
-
