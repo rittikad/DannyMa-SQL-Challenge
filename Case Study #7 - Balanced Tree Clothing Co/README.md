@@ -214,37 +214,64 @@ GROUP BY member;
 
 ---
 
-<details> 
-<summary><h3>Business Question 4: What is the most purchased menu item overall?</h3></summary>
+<details>
+<summary><h3>Business Question 4: Segment-Level Analysis</h3></summary>
 
 **SQL Query:**
 ```sql
+-- Segment-level metrics including top-selling product
+WITH segment_metrics AS (
+    SELECT 
+        pd.segment_name,
+        SUM(s.qty) AS total_quantity,
+        SUM(s.price * s.qty) AS total_revenue,
+        ROUND(SUM((s.price * s.discount/100) * s.qty),2) AS total_discount
+    FROM balanced_tree.sales s
+    JOIN balanced_tree.product_details pd ON s.prod_id = pd.product_id
+    GROUP BY pd.segment_name
+),
+top_products AS (
+    SELECT 
+        pd.segment_name,
+        pd.product_name,
+        SUM(s.price * s.qty) AS product_revenue,
+        ROW_NUMBER() OVER(PARTITION BY pd.segment_name ORDER BY SUM(s.price * s.qty) DESC) AS rk
+    FROM balanced_tree.sales s
+    JOIN balanced_tree.product_details pd ON s.prod_id = pd.product_id
+    GROUP BY pd.segment_name, pd.product_name
+)
 SELECT 
-    m.product_name,
-    COUNT(*) AS times_ordered
-FROM sales s
-JOIN menu m ON s.product_id = m.product_id
-GROUP BY m.product_name
-ORDER BY times_ordered DESC;
+    sm.segment_name,
+    sm.total_quantity,
+    sm.total_revenue,
+    sm.total_discount,
+    tp.product_name AS top_selling_product,
+    tp.product_revenue AS top_product_revenue
+FROM segment_metrics sm
+JOIN top_products tp 
+    ON sm.segment_name = tp.segment_name AND tp.rk = 1;
+
 ```
-**Explanation:** This query identifies which menu item was purchased the most across all customers. It joins sales with menu to map product IDs to names, counts the total orders per item, and ranks them to see overall popularity.
+
+**Explanation:** This query identifies which product segment contributed most to sales. It aggregates total quantity sold, total revenue, and total discount for each segment. It also determines the top-selling product within each segment based on revenue, helping merchandising and finance teams understand key revenue drivers and product importance within each segment.
 
 **Output:**
-| product_name | times_ordered |
-| ------------ | ------------- |
-| ramen        | 8             |
-| curry        | 4             |
-| sushi        | 3             |
+| segment_name | total_quantity | total_revenue | total_discount | top_selling_product           | top_product_revenue |
+| ------------ | -------------- | ------------- | -------------- | ----------------------------- | ------------------- |
+| Jacket       | 22,770         | 733,966       | 88,554.92      | Grey Fashion Jacket - Womens  | 418,608             |
+| Jeans        | 22,698         | 416,700       | 50,687.94      | Black Straight Jeans - Womens | 242,304             |
+| Shirt        | 22,530         | 812,286       | 99,188.54      | Blue Polo Shirt - Mens        | 435,366             |
+| Socks        | 22,434         | 615,954       | 74,026.88      | Navy Solid Socks - Mens       | 273,024             |
 
 **Actionable Insights:**
-- **Ramen is the most popular menu item**, showing it drives the highest customer demand.
-- **Curry and sushi have lower purchase counts**, indicating potential areas for promotion or menu adjustment.
-- **High-demand items like ramen** should be prioritized in inventory management to avoid stockouts and maximize sales.
+- **Shirts and Jackets segments drive the highest revenue**, led by Blue Polo Shirt and Grey Fashion Jacket.  
+- Jeans and Socks have high quantity but lower revenue, suggesting price or demand differences.  
+- Top product in each segment contributes **~35–55% of segment revenue**, highlighting reliance on key items.
 
 **Recommended Actions:**
-1. **Promote ramen specials or combo meals** to capitalize on its popularity and increase revenue.
-2. **Create targeted campaigns for curry and sushi** to improve sales of underperforming items.
-3. **Align inventory and purchasing decisions** with item popularity to reduce waste and ensure supply meets demand.
+1. **Promote top segment products:** Feature Blue Polo Shirt and Grey Fashion Jacket in campaigns or bundles.  
+2. **Boost mid-performing segments:** Encourage Jeans and Socks purchases through cross-selling or limited-time promotions.  
+3. **Optimize inventory planning:** Ensure sufficient stock of top-selling products to meet demand and prevent stockouts.
 
 </details>
 
