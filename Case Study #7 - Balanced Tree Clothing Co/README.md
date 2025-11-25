@@ -402,7 +402,7 @@ This query calculates the transaction penetration for each product, i.e., the pe
 
 To streamline analysis for the Balanced Tree team, a single SQL script consolidates all business questions into a monthly report. This allows the team to generate metrics for any month with minimal changes.  
 
-[View SQL Script](Case Study #7 - Balanced Tree Clothing Co/Monthly_reporting_code.sql)
+[View SQL Script](/Monthly_reporting_code.sql/)
 
 ---
 
