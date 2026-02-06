@@ -286,7 +286,7 @@ JOIN top_products tp
 <details> 
 <summary><h3> Business Question 5: Category Level Analysis </h3></summary>
 
-## SQL Query:
+**SQL Query:**
 ```sql
 -- Total quantity, revenue, discount per category, and top-selling product per category
 WITH category_agg AS (
