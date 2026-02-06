@@ -16,6 +16,10 @@ The 8 Week SQL Challenge by Danny Ma is a structured series of real-world SQL ex
    Analyze restaurant sales data to identify top-selling items and optimize inventory.
    Focus: Customer loyalty and spending behavior analysis using CTE, SQL window functions, joins, and aggregations.
 
+1. **[Case Study #7 – Balanced Tree Clothing Co.](Case Study #7 - Balanced Tree Clothing Co)**  
+   Analyze restaurant sales data to identify top-selling items and optimize inventory.
+   Focus: Customer loyalty and spending behavior analysis using CTE, SQL window functions, joins, and aggregations.
+
 > Each case study is designed to simulate a real business scenario, allowing learners to **write SQL queries to answer business questions and generate insights**.
 
 ---
@@ -41,6 +45,7 @@ All case studies will be organized in individual folders under `Case_Studies/`. 
 ---
 
 This repository will be updated as I complete each weekly case study, documenting **approaches, SQL queries, and insights** from the challenge.
+
 
 
 
